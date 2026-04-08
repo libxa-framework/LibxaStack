@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * LibxaFrame CLI Entry Point
+ *
+ * This tool allows you to perform framework operations like
+ * migrations, scaffolding, and starting servers.
+ */
+
+require __DIR__ . '/vendor/autoload.php';
+
+$app = require_once __DIR__ . '/src/bootstrap/app.php';
+
+$kernel = $app->make(Libxa\Foundation\ConsoleKernel::class);
+
+$status = $kernel->handle(
+    new Symfony\Component\Console\Input\ArgvInput,
+    new Symfony\Component\Console\Output\ConsoleOutput
+);
+
+$kernel->terminate($status);
+
+exit($status);

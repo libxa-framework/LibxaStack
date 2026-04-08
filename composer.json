@@ -1,0 +1,63 @@
+{
+    "name": "libxa/libxa",
+    "version": "0.0.1",
+    "description": "libxaFrame Starter Application — Build something elite.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "Libxa/framework": "^1.0",
+        "workerman/workerman": "^4.1",
+        "psr/container": "^2.0",
+        "psr/http-message": "^2.0",
+        "psr/http-server-handler": "^1.0",
+        "psr/log": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "pestphp/pest": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/app/"
+        },
+        "classmap": [
+            "src/database/migrations"
+        ],
+        "files": [
+            "src/bootstrap/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php Libxa key:generate --ansi"
+        ],
+        "serve": "php Libxa serve",
+        "ws": "php Libxa ws:serve",
+        "test": "php vendor/bin/pest"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "Libxa": {
+            "modules-path": "src/app/Modules",
+            "packages-path": "packages"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
