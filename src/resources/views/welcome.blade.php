@@ -10,7 +10,7 @@
     </h1>
     
     <p style="font-size: 1.25rem; color: var(--text-muted); margin-bottom: 3rem; line-height: 1.6;">
-       sss11 Welcome to your new LibxaFrame application. We've just initialized a powerful, multi-driver 
+       Welcome to your new LibxaFrame application. We've just initialized a powerful, multi-driver 
         authentication system with persistent sessions and a premium UI component library.
     </p>
   

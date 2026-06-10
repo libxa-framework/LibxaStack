@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Auth;
 use Libxa\Http\Request;
 use Libxa\Http\Response;
 use App\Models\User;
-use Libxa\Atlas\DB;
 
 /**
  * Registration Controller
@@ -28,24 +27,24 @@ class RegisterController
     public function store(Request $request): Response
     {
         $data = $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users',
-            'password' => 'required|min:8|confirmed',
+            'name'                  => 'required|string|max:255',
+            'email'                 => 'required|email|unique:users,email',
+            'password'              => 'required|min:8|confirmed',
+            'password_confirmation' => 'required',
         ]);
 
-        $user = DB::table('users')->insertGetId([
+        // Create user via Atlas ORM (password is auto-hashed via mutator)
+        $user = User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
-            'password' => password_hash($data['password'], PASSWORD_DEFAULT),
-            'created_at' => now()->format('Y-m-d H:i:s'),
-            'updated_at' => now()->format('Y-m-d H:i:s'),
+            'password' => $data['password'],
         ]);
 
-        if ($user) {
-            auth()->loginUsingId($user);
-            return redirect('/home')->with('success', 'Registration successful!');
+        if ($user->getKey()) {
+            auth()->loginUsingId($user->getKey());
+            return redirect('/home')->with('success', 'Welcome to LibxaFrame!');
         }
 
-        return back()->with('error', 'Registration failed.');
+        return back()->with('error', 'Registration failed. Please try again.');
     }
 }

@@ -31,7 +31,7 @@ class LoginController
         ]);
 
         if (auth()->attempt($credentials)) {
-            $request->session()->regenerate();
+            $request->session()->regenerate(true);
             return redirect('/home');
         }
 
