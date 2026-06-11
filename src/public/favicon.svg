@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+  <rect width="28" height="28" rx="6" fill="#f59e0b"/>
+  <text x="7" y="22" font-family="Arial Black, Impact, sans-serif" font-size="17" font-weight="900" fill="#000">L</text>
+  <polygon points="18,2.5 19,5.5 22.2,5.5 19.7,7.3 20.6,10.3 18,8.5 15.4,10.3 16.3,7.3 13.8,5.5 17,5.5" fill="#000" opacity="0.80"/>
+</svg>
