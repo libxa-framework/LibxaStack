@@ -27,19 +27,21 @@
 
     <style>
         :root {
-            --primary: #f59e0b;
-            --primary-hover: #fbbf24;
-            --primary-active: #b45309;
+            --primary: #f59e0b;        /* amber-400 */
+            --primary-hover: #fcd34d;  /* amber-300 */
+            --primary-active: #d97706; /* amber-600 */
 
-            --bg: #ffffff;
-            --bg-subtle: #fafafa;
-            --surface: #ffffff;
-            --surface-hover: #fafafa;
-            --border: #f0f0f0;
-            --border-strong: #e5e5e5;
-            --text: #171717;
-            --text-muted: #737373;
-            --text-faint: #a3a3a3;
+            /* Light theme (default) — matches Tailwind neutral scale */
+            --bg: #ffffff;             /* white */
+            --bg-subtle: #fafafa;      /* neutral-50 */
+            --surface: #ffffff;        /* white */
+            --surface-hover: #fafafa;  /* neutral-50 */
+            --border: #f5f5f5;         /* neutral-100 */
+            --border-strong: #e5e5e5;  /* neutral-200 */
+            --nav-hover: #f5f5f5;      /* neutral-100 */
+            --text: #171717;           /* neutral-900 */
+            --text-muted: #525252;     /* neutral-600 */
+            --text-faint: #a3a3a3;     /* neutral-400 */
         }
 
         html.dark {
@@ -49,9 +51,10 @@
             --surface-hover: #141414;
             --border: rgba(255, 255, 255, 0.06);
             --border-strong: rgba(255, 255, 255, 0.1);
+            --nav-hover: rgba(255, 255, 255, 0.05);
             --text: #ffffff;
-            --text-muted: #a3a3a3;
-            --text-faint: #737373;
+            --text-muted: #a3a3a3;     /* neutral-400 */
+            --text-faint: #737373;     /* neutral-500 */
         }
 
         * {
@@ -96,14 +99,19 @@
 
         /* ===== Header ===== */
         header.site-header {
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 50;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid color-mix(in srgb, var(--border-strong) 80%, transparent);
             background-color: color-mix(in srgb, var(--bg) 90%, transparent);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
         }
+
+        /* push content below the fixed header */
+        body { padding-top: 3.5rem; }
 
         nav.site-nav {
             max-width: 80rem;
@@ -181,7 +189,7 @@
             transition: color .15s, background-color .15s;
         }
 
-        .nav-links a.nav-link:hover { color: var(--text); background-color: var(--surface-hover); }
+        .nav-links a.nav-link:hover { color: var(--text); background-color: var(--nav-hover); }
 
         .nav-actions { display: flex; align-items: center; gap: 0.5rem; }
 
@@ -199,7 +207,7 @@
             transition: color .15s, background-color .15s;
         }
 
-        .icon-btn:hover { color: var(--text); background-color: var(--surface-hover); }
+        .icon-btn:hover { color: var(--text); background-color: var(--nav-hover); }
 
         .vsep { width: 1px; height: 16px; background: var(--border-strong); margin: 0 0.25rem; }
 
@@ -302,7 +310,7 @@
             width: 100%;
             background: var(--bg);
             border: 1px solid var(--border-strong);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 0.7rem 0.875rem;
             color: var(--text);
             font-size: 0.875rem;
@@ -310,17 +318,22 @@
             transition: border-color .15s, box-shadow .15s;
         }
 
-        html.dark form input { background: var(--surface-hover); }
+        html.dark form input { background: rgba(255,255,255,0.05); }
 
         form input::placeholder { color: var(--text-faint); }
 
         form input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(245,158,11,.12);
+            box-shadow: 0 0 0 3px rgba(245,158,11,.3);
         }
 
-        .submit-btn { width: 100%; margin-top: 0.375rem; padding: 0.75rem; }
+        html.dark form input:focus {
+            border-color: rgba(245,158,11,.4);
+            box-shadow: 0 0 0 3px rgba(245,158,11,.3);
+        }
+
+        .submit-btn { width: 100%; margin-top: 0.375rem; padding: 0.75rem; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(245,158,11,.2); }
 
         .auth-footer { margin-top: 1.5rem; text-align: center; font-size: 0.875rem; color: var(--text-faint); }
         .auth-footer a { color: var(--primary); font-weight: 600; text-decoration: none; }

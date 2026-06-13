@@ -20,16 +20,20 @@
         gap: 0.5rem;
         padding: 0.375rem 0.875rem;
         border-radius: 999px;
-        background: rgba(245,158,11,.08);
-        border: 1px solid rgba(245,158,11,.2);
-        color: #b45309;
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        color: #d97706;
         font-size: 0.75rem;
         font-family: 'JetBrains Mono', monospace;
         letter-spacing: 0.02em;
         margin-bottom: 2.5rem;
     }
 
-    html.dark .hero-badge { color: #fcd34d; }
+    html.dark .hero-badge {
+        background: rgba(245,158,11,.1);
+        border-color: rgba(245,158,11,.25);
+        color: #fcd34d;
+    }
 
     .pulse-dot {
         width: 6px; height: 6px; border-radius: 999px;
@@ -139,7 +143,7 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         border: 1px solid var(--border);
-        border-radius: 14px;
+        border-radius: 12px;
         overflow: hidden;
     }
 
@@ -165,12 +169,17 @@
     .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
 
     .stat-icon {
-        width: 40px; height: 40px; border-radius: 10px;
-        background: rgba(245,158,11,.08);
-        border: 1px solid rgba(245,158,11,.2);
+        width: 40px; height: 40px; border-radius: 8px;
+        background: #fffbeb;
+        border: 1px solid #fef3c7;
         display: flex; align-items: center; justify-content: center;
         flex-shrink: 0;
         color: var(--primary);
+    }
+
+    html.dark .stat-icon {
+        background: rgba(245,158,11,.1);
+        border-color: rgba(245,158,11,.2);
     }
 
     .stat-value { font-size: 1.5rem; font-weight: 900; color: var(--text); letter-spacing: -0.02em; }
@@ -192,7 +201,7 @@
         position: relative;
         background: var(--surface);
         border: 1px solid var(--border);
-        border-radius: 14px;
+        border-radius: 12px;
         padding: 2rem;
         transition: border-color .2s, box-shadow .2s;
     }
@@ -212,20 +221,29 @@
         letter-spacing: 0.1em;
         padding: 0.25rem 0.625rem;
         border-radius: 999px;
-        background: rgba(245,158,11,.08);
-        border: 1px solid rgba(245,158,11,.2);
-        color: #b45309;
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        color: #d97706;
     }
 
-    html.dark .feature-badge { color: #fcd34d; }
+    html.dark .feature-badge {
+        background: rgba(245,158,11,.1);
+        border-color: rgba(245,158,11,.2);
+        color: #fcd34d;
+    }
 
     .feature-icon {
         width: 44px; height: 44px; border-radius: 12px;
-        background: rgba(245,158,11,.06);
-        border: 1px solid rgba(245,158,11,.18);
+        background: #fffbeb;
+        border: 1px solid #fde68a;
         display: flex; align-items: center; justify-content: center;
         margin-bottom: 1.5rem;
         color: var(--primary);
+    }
+
+    html.dark .feature-icon {
+        background: rgba(245,158,11,.05);
+        border-color: rgba(245,158,11,.3);
     }
 
     .feature-card h3 {
