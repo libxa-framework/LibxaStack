@@ -18,7 +18,7 @@ class WelcomeController
     {
         return view('welcome', [
             'framework' => 'LibxaFrame',
-            'version'   => '0.0.1',
+            'version'   => '0.7.0',
         ]);
     }
 }
