@@ -1,18 +1,15 @@
 <?php
 
 use Libxa\Router\Router;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
 /** @var Router $router */
 
 // ── Welcome ───────────────────────────────────────────────────────────
-$router->get('/', function () {
-    return view('welcome', [
-        'framework' => 'LibxaFrame',
-        'version'   => '0.0.1',
-    ]);
-});
+$router->get('/', [WelcomeController::class, 'index']);
 
 // ── Auth ──────────────────────────────────────────────────────────────
 $router->get('/login',  [LoginController::class, 'show']);
@@ -24,11 +21,5 @@ $router->post('/register', [RegisterController::class, 'store']);
 
 // ── Protected area ────────────────────────────────────────────────────
 $router->group(['middleware' => 'auth'], function (Router $router) {
-    $router->get('/home', function () {
-        return view('welcome', [
-            'framework' => 'LibxaFrame',
-            'version'   => '0.0.1',
-            'user'      => auth()->user(),
-        ]);
-    });
+    $router->get('/home', [HomeController::class, 'index']);
 });
