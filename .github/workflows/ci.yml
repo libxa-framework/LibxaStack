@@ -22,7 +22,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ["8.3", "8.4"]
+        # Every stable PHP the skeleton claims to support. "php": "^8.3"
+        # means 8.3, 8.4 and 8.5 — all three are proven here.
+        php: ["8.3", "8.4", "8.5"]
 
     steps:
       - name: Checkout
@@ -173,6 +175,41 @@ jobs:
       - name: Audit dependencies
         run: composer audit --no-interaction
 
+  frontend:
+    name: Frontend build
+    runs-on: ubuntu-latest
+
+    # There was no npm job at all, so nothing noticed that the skeleton's
+    # frontend was unusable: @vitejs/plugin-react ^4 caps at vite 7 while
+    # package.json pinned vite ^8, making `npm install` fail outright, and
+    # vite.config.js pointed at entry files that did not exist in the
+    # repository, so `npm run build` could never succeed either.
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # `npm ci` would need a committed lock file; the skeleton intentionally
+      # ships only package.json so new projects resolve fresh. `install`
+      # still fails loudly on an unsatisfiable peer-dependency tree.
+      - name: Install
+        run: npm install --no-fund --no-audit
+
+      - name: Audit
+        run: npm audit --audit-level=moderate
+
+      - name: Build
+        run: npm run build
+
+      - name: The build produced a manifest where PHP looks for it
+        run: |
+          set -euo pipefail
+          test -f src/public/build/manifest.json \
+            || { echo "::error::vite must write src/public/build/manifest.json — the framework's vite() helper reads exactly that path"; exit 1; }
+          echo "manifest OK"
+
   create-project:
     name: composer create-project
     runs-on: ubuntu-latest
@@ -184,7 +221,9 @@ jobs:
 
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.3"
+          # Newest supported version: a fresh install must work on what a new
+          # user most likely has, not only on the oldest version we allow.
+          php-version: "8.5"
           extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, openssl
           coverage: none
 
