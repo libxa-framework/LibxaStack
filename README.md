@@ -592,3 +592,16 @@ The LibxaFrame framework is open-sourced software licensed under the MIT license
 ---
 
 **Happy coding with LibxaFrame! 🚀**
+
+## Project governance
+
+| Document | What it covers |
+|---|---|
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Local setup, branch rules, commit convention, test policy |
+| [docs/BRANCHING.md](docs/BRANCHING.md) | The branch model — `main` is what Packagist publishes |
+| [docs/RELEASING.md](docs/RELEASING.md) | Release and hotfix runbook |
+| [docs/REPOSITORY_SETUP.md](docs/REPOSITORY_SETUP.md) | One-time GitHub settings: branch protection, tag rules, Packagist webhook |
+| [SECURITY.md](SECURITY.md) | Private vulnerability disclosure and supported versions |
+| [CHANGELOG.md](CHANGELOG.md) | What changed in each release |
+
+Contributions branch from `develop`, never from `main`.
