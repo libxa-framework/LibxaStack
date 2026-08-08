@@ -51,7 +51,11 @@ export default defineConfig({
                 assetFileNames: '[name]-[hash].[ext]',
             },
         },
-        manifest: true, // Generates manifest.json for PHP to read
+        // Vite 5+ defaults to writing the manifest to `<outDir>/.vite/manifest.json`,
+        // but the framework's vite() helper reads `<outDir>/manifest.json`.
+        // Naming it explicitly puts the file where PHP actually looks —
+        // otherwise every @vite() call silently emits nothing.
+        manifest: 'manifest.json',
         sourcemap: false,
     },
 
