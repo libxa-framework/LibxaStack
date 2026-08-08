@@ -156,6 +156,15 @@ class FrameworkLinkTest extends TestCase
             (string) $repo['url'],
             'the url must be a glob: a literal missing path makes Composer abort'
         );
+
+        // A canonical path repository *replaces* Packagist for any package it
+        // provides. With the sibling checkout present, that made every
+        // released version unresolvable — including during `composer update
+        // --lock`, which then failed outright.
+        $this->assertFalse(
+            $repo['canonical'] ?? true,
+            'the path repository must be non-canonical so Packagist versions stay resolvable'
+        );
     }
 
     /**
