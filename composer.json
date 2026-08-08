@@ -5,7 +5,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
-        "libxa/framework": "^0.8.0 || dev-main@dev",
+        "libxa/framework": "^0.9.0 || dev-main@dev",
         "workerman/workerman": "^4.1",
         "psr/container": "^2.0",
         "psr/http-message": "^2.0",
@@ -56,6 +56,9 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
+        "platform": {
+            "php": "8.3"
+        },
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
@@ -73,6 +76,7 @@
             "//": "Local sibling checkout of the framework. symlink:true means vendor/libxa/framework IS the working copy at ../libxaframe (a junction on Windows), so edits to the framework are live immediately and can never drift out of sync with a mirrored copy. The url is a glob on purpose: a plain path that does not exist makes Composer abort, which would break composer create-project for anyone without the sibling directory - with no match, resolution falls through to the packagist constraint in require.",
             "type": "path",
             "url": "../libxaframe*",
+            "canonical": false,
             "options": {
                 "symlink": true
             }
