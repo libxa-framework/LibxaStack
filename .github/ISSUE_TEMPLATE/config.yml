@@ -1,0 +1,25 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: 🔐 Report a security vulnerability
+    url: https://github.com/libxa-framework/LibxaStack/security/advisories/new
+    about: >
+      Never report a vulnerability in a public issue. Use this private
+      advisory form, or email libxa@vyloxi.com with subject [SECURITY].
+
+  - name: 🏗️ Framework issues (routing, ORM, Blade, container)
+    url: https://github.com/libxa-framework/libxa/issues
+    about: >
+      This repository is only the application skeleton. If the bug is in the
+      framework itself, report it there — it will get fixed faster.
+
+  - name: 💬 Question or help with your own code
+    url: https://github.com/libxa-framework/libxa/discussions
+    about: >
+      "How do I ...?" belongs in Discussions. Once you have run
+      composer create-project, the code is yours — we cannot debug it, but
+      the community may be able to help.
+
+  - name: 📖 Contributing guide
+    url: https://github.com/libxa-framework/LibxaStack/blob/main/CONTRIBUTING.md
+    about: Local setup, branch model, and how to open a PR.

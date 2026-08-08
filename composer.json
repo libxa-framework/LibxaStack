@@ -1,11 +1,11 @@
 {
     "name": "libxa/libxa",
-    "description": "libxaFrame Starter Application — Build something elite.",
+    "description": "libxaFrame Starter Application \u2014 Build something elite.",
     "type": "project",
     "license": "MIT",
     "require": {
         "php": "^8.3",
-        "libxa/framework": "^0.8.0",
+        "libxa/framework": "^0.8.0 || dev-main@dev",
         "workerman/workerman": "^4.1",
         "psr/container": "^2.0",
         "psr/http-message": "^2.0",
@@ -37,11 +37,20 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php Libxa key:generate --ansi"
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php -r \"is_dir('database') || mkdir('database', 0755, true);\"",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@php libxa key:generate --ansi"
         ],
-        "serve": "php Libxa serve",
-        "ws": "php Libxa ws:serve",
-        "test": "php vendor/bin/pest"
+        "serve": "php libxa serve",
+        "ws": "php libxa ws:serve",
+        "test": "phpunit --no-coverage",
+        "lint": "@php tools/lint.php src tests tools",
+        "check": [
+            "@lint",
+            "@test",
+            "composer audit --no-interaction"
+        ]
     },
     "config": {
         "optimize-autoloader": true,
@@ -58,7 +67,41 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "//": "Local sibling checkout of the framework. symlink:true means vendor/libxa/framework IS the working copy at ../libxaframe (a junction on Windows), so edits to the framework are live immediately and can never drift out of sync with a mirrored copy. The url is a glob on purpose: a plain path that does not exist makes Composer abort, which would break composer create-project for anyone without the sibling directory - with no match, resolution falls through to the packagist constraint in require.",
+            "type": "path",
+            "url": "../libxaframe*",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "scripts-descriptions": {
+        "test": "Run the application test suite",
+        "lint": "Syntax-check every PHP file",
+        "check": "Everything CI runs, locally",
+        "serve": "Start the development server"
+    },
+    "support": {
+        "issues": "https://github.com/libxa-framework/LibxaStack/issues",
+        "source": "https://github.com/libxa-framework/LibxaStack",
+        "security": "https://github.com/libxa-framework/LibxaStack/security/policy"
+    },
+    "authors": [
+        {
+            "name": "Voukeng Dongmo Franky Steve",
+            "email": "libxa@vyloxi.com",
+            "role": "Maintainer"
+        }
+    ],
+    "keywords": [
+        "libxa",
+        "framework",
+        "starter-kit",
+        "skeleton",
+        "php"
+    ],
+    "homepage": "https://github.com/libxa-framework/LibxaStack"
 }
-
-

@@ -1,0 +1,50 @@
+# Line endings — normalise to LF in the repository regardless of platform.
+* text=auto eol=lf
+
+*.php    text diff=php
+*.md     text
+*.json   text
+*.yml    text
+*.yaml   text
+*.xml    text
+*.blade.php text
+
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.ico    binary
+*.svg    text
+*.sqlite binary
+
+# ─────────────────────────────────────────────────────────────────────────
+#  Distribution
+# ─────────────────────────────────────────────────────────────────────────
+#
+# This package is installed with `composer create-project`, which copies the
+# whole archive into the user's new project directory. So the export-ignore
+# list here is much shorter than a library's: almost everything IS the
+# deliverable, and anything removed is something the new project will not have.
+#
+# Only repository-maintenance files are stripped — the things that are about
+# developing *this skeleton* rather than about the application it produces.
+
+/.github             export-ignore
+/.gitattributes      export-ignore
+/docs                export-ignore
+/CONTRIBUTING.md     export-ignore
+/CODE_OF_CONDUCT.md  export-ignore
+/.phpunit.cache      export-ignore
+
+# Deliberately NOT export-ignored — a new project needs all of these:
+#   /src            the application skeleton
+#   /tests          so the new project starts with a working test suite
+#   /tools          composer lint must work in the generated project
+#   /database       migrations and the sqlite placeholder
+#   /resources      views and assets
+#   /phpunit.xml    or `composer test` finds no tests
+#   /.gitignore     the new project needs the correct ignore rules from day one
+#   /.editorconfig
+#   /LICENSE /README.md /CHANGELOG.md /SECURITY.md
+#   /composer.json /package.json /vite.config.js
+#   /libxa          the CLI entry point
