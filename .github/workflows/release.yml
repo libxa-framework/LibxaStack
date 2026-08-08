@@ -42,10 +42,19 @@ jobs:
 
       # A lightweight tag has no author, date or message — no provenance for
       # something that is about to be published permanently.
+      #
+      # Asked via the API rather than `git cat-file`: actions/checkout writes
+      # the tag into the runner's local refs as a plain commit pointer, so
+      # `git cat-file -t` reports "commit" even for a properly annotated tag.
+      # That rejected the v0.2.0 release, which was correctly annotated.
       - name: Tag must be annotated
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          if [ "$(git cat-file -t "${GITHUB_REF_NAME}")" != "tag" ]; then
+          object_type=$(gh api "repos/${GITHUB_REPOSITORY}/git/refs/tags/${GITHUB_REF_NAME}" --jq '.object.type')
+          echo "Tag object type: ${object_type}"
+          if [ "${object_type}" != "tag" ]; then
             echo "::error::'${GITHUB_REF_NAME}' is a lightweight tag. Use: git tag -a ${GITHUB_REF_NAME} -m 'Release ${GITHUB_REF_NAME}'"
             exit 1
           fi
@@ -55,7 +64,11 @@ jobs:
       - name: Tag must be on main
         run: |
           set -euo pipefail
-          git fetch origin main --depth=0
+          # No --depth: `--depth=0` is not "unlimited", it is invalid
+          # (`fatal: depth 0 is not a positive number`) and under `set -e`
+          # aborts the step with exit 128. The checkout above already used
+          # fetch-depth: 0, so full history is present.
+          git fetch origin main
           if ! git merge-base --is-ancestor "${GITHUB_REF_NAME}^{commit}" origin/main; then
             echo "::error::${GITHUB_REF_NAME} is not an ancestor of main. Tags are cut from main only — see docs/BRANCHING.md"
             exit 1
@@ -102,7 +115,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: ["8.3", "8.4"]
+        php: ["8.3", "8.4", "8.5"]
 
     steps:
       - uses: actions/checkout@v4

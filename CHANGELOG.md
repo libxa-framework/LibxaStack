@@ -10,6 +10,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-08-08
+
+> **Requires `libxa/framework` ^0.10.0.**
+
+### Added
+
+- **PHP 8.5 support.** `^8.3` already permitted it, but nothing tested it. CI
+  now runs the suite on **8.3, 8.4 and 8.5**, and the `create-project` job
+  installs on 8.5 — a fresh install should work on what a new user most likely
+  has.
+- A **frontend CI job** that installs, audits, builds, and asserts the Vite
+  manifest lands where the framework reads it. There was no npm job at all
+  before, which is why none of the breakage below was noticed.
+
+### Fixed
+
+The frontend toolchain could not install or build at all:
+
+- **`npm install` failed outright.** `@vitejs/plugin-react@4` caps at vite 7,
+  but `package.json` pinned `vite: ^8.0.7`. Bumped `plugin-react` to `^6.0.5`
+  and `plugin-vue` to `^6.0.8`.
+- **`npm run build` could never succeed.** `vite.config.js` pointed at
+  `src/resources/js/app.js` and `src/resources/css/app.css`, neither of which
+  existed — only their compiled output was committed, so a new project could
+  never rebuild the assets it was given. Both entry files are restored.
+- **`@vite()` emitted nothing.** Vite 5+ writes the manifest to
+  `<outDir>/.vite/manifest.json` while the framework reads
+  `<outDir>/manifest.json`.
+- The orphaned pre-built assets at `src/public` root are removed — build output
+  with no sources. Builds now go to `src/public/build`, which is gitignored.
+
+### Security
+
+- **Six moderate Svelte XSS advisories**, fixed only in Svelte 5. The skeleton
+  contains no `.svelte` files, so there was nothing to migrate: `svelte` to
+  `^5.56.8` and `@sveltejs/vite-plugin-svelte` to `^7.2.0`. `npm audit` now
+  reports zero vulnerabilities.
+
+### Changed
+
+- `phpunit/phpunit` widened to `^11.5 || ^12.0 || ^13.0`; resolves to 12.5.
+- **`pestphp/pest` removed.** Nothing used it — the suite runs on PHPUnit — and
+  Pest 2 predates PHP 8.5, so it would have blocked the upgrade. Drops 20
+  transitive packages.
+- `package-lock.json` is now committed, consistent with `composer.lock`.
+
 ## [0.2.0] - 2026-08-08
 
 > **Requires `libxa/framework` ^0.9.0.** The skeleton's tests depend on fixes
@@ -62,6 +108,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Baseline for this changelog. Earlier releases are catalogued in the repository
 history.
 
-[Unreleased]: https://github.com/libxa-framework/LibxaStack/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/libxa-framework/LibxaStack/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/libxa-framework/LibxaStack/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/libxa-framework/LibxaStack/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/libxa-framework/LibxaStack/releases/tag/v0.1.1

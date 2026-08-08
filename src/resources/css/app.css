@@ -1,0 +1,19 @@
+/*
+ | Application stylesheet
+ |
+ | Referenced by layouts/app.blade.php through @vite(). Tailwind v4 needs no
+ | separate config file — the single @import below pulls in the framework and
+ | scans the content globs declared with @source.
+ */
+
+@import "tailwindcss";
+
+/* Templates Tailwind should scan for class names. */
+@source "../../resources/views/**/*.blade.php";
+@source "../../app/**/*.php";
+@source "../js/**/*.{js,ts,jsx,tsx,vue,svelte}";
+
+:root {
+    --libxa-indigo: #6366f1;
+    --libxa-purple: #c084fc;
+}
