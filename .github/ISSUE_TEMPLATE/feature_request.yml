@@ -1,0 +1,68 @@
+name: Feature request
+description: Propose new functionality or a change to existing behaviour
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This repository is the **application skeleton**. Proposals for new
+        framework capabilities belong in
+        [libxa-framework/libxa](https://github.com/libxa-framework/libxa/issues).
+
+        Bear in mind that everything here is installed by every new project,
+        forever — so the bar for adding dependencies or example code is high.
+        "One less thing to delete" is a legitimate argument against a feature.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Before you file
+      options:
+        - label: I searched existing issues and discussions for this idea
+          required: true
+        - label: This belongs in the skeleton, not in the framework
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: >
+        Describe the situation you are in, not the solution you have in mind.
+        The best feature requests start from a real thing that was hard to do.
+      placeholder: |
+        Every new project has to hand-create src/storage subdirectories before
+        the first request works, because git does not track empty directories.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What the API might look like, if you have a view on it.
+      render: php
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered
+      description: Including how you are working around it today.
+
+  - type: dropdown
+    id: breaking
+    attributes:
+      label: Would this break existing code?
+      options:
+        - "No — purely additive"
+        - "Yes — existing behaviour changes"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I am willing to open a pull request for this

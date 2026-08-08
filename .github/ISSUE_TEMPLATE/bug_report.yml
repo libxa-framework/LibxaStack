@@ -1,0 +1,103 @@
+name: Bug report
+description: Something in the starter kit skeleton is wrong
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting.
+
+        **Is this a framework bug?** Routing, the ORM, Blade, the container,
+        sessions and encryption all live in
+        [libxa-framework/libxa](https://github.com/libxa-framework/libxa/issues).
+        This repository is only the application skeleton — config files,
+        example controllers, migrations, views and tooling.
+
+        **Security issue?** Do not file it here. Follow
+        [SECURITY.md](https://github.com/libxa-framework/LibxaStack/blob/main/SECURITY.md).
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Before you file
+      options:
+        - label: I searched existing issues and this is not a duplicate
+          required: true
+        - label: This is about the skeleton itself, not code I wrote after create-project
+          required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: LibxaStack version
+      placeholder: "0.1.1, or dev-main @ commit abc1234"
+    validations:
+      required: true
+
+  - type: input
+    id: framework
+    attributes:
+      label: LibxaFrame version
+      description: "`composer show libxa/framework | head -3`"
+      placeholder: "0.8.0"
+    validations:
+      required: true
+
+  - type: input
+    id: php
+    attributes:
+      label: PHP version
+      placeholder: "8.4.19"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options: [Linux, macOS, Windows, Docker, Other]
+    validations:
+      required: true
+
+  - type: dropdown
+    id: stage
+    attributes:
+      label: When does it happen?
+      options:
+        - "During composer create-project"
+        - "During php libxa migrate"
+        - "Starting the server (php libxa serve)"
+        - "Serving a request"
+        - "Running the test suite"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you observed, and what you expected instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: From a clean checkout, so someone else can follow along exactly.
+      render: shell
+      placeholder: |
+        composer create-project libxa/libxa my-app
+        cd my-app
+        php libxa migrate
+        # -> SQLSTATE[HY000]: no such table: users
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Error output
+      description: The full message and stack trace.
+      render: shell

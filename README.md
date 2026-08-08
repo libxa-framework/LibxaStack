@@ -81,6 +81,50 @@ php libxa serve
 
 Open your browser and visit `http://localhost:8000`
 
+## Running the tests
+
+```bash
+php vendor/bin/phpunit
+```
+
+The suite boots the real application, migrates a throwaway SQLite database per
+test and drives requests through the actual HTTP kernel — so a green run means
+register → login → protected page → logout genuinely works.
+
+## Developing against a local framework checkout
+
+A normal install resolves `libxa/framework` from Packagist and you can ignore
+this section. If you keep the framework source as a sibling directory:
+
+```
+VYLOXI/libxa/
+├── libxaframe/     # the framework source
+└── LibxaStack/     # this application
+```
+
+then `composer install` **junctions** `vendor/libxa/framework` straight onto
+`../libxaframe` (`repositories[0].options.symlink: true`). The vendor directory
+*is* the framework working copy, so:
+
+- editing framework source takes effect on the very next request — no
+  `composer update`, no `dump-autoload`, not even for brand-new classes
+  (the framework is PSR-4, so the autoloader finds them on the fly);
+- the two can never drift apart. They previously did, in both directions:
+  the vendored copy had console commands the source lacked while the source
+  had bug fixes and entire directories the copy lacked, so framework fixes
+  silently had no effect on the app.
+
+`tests/Feature/FrameworkLinkTest.php` fails the build if that link is ever
+replaced by a copy. It skips itself when there is no sibling checkout, which
+is the correct state for CI and production.
+
+Two details in `composer.json` are deliberate — please keep them:
+
+| Setting | Why |
+|---|---|
+| `repositories[0].url` is the glob `../libxaframe*` | A literal path that does not exist makes Composer **abort**, which would break `composer create-project` for everyone without the sibling directory. A glob that matches nothing is simply ignored, so resolution falls through to Packagist. |
+| `require` is `dev-main \|\| ^0.8.0` | `dev-main` picks up the local checkout; `^0.8.0` keeps the project installable from Packagist without it. |
+
 ## Project Structure
 
 ```
