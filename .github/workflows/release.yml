@@ -64,7 +64,11 @@ jobs:
       - name: Tag must be on main
         run: |
           set -euo pipefail
-          git fetch origin main --depth=0
+          # No --depth: `--depth=0` is not "unlimited", it is invalid
+          # (`fatal: depth 0 is not a positive number`) and under `set -e`
+          # aborts the step with exit 128. The checkout above already used
+          # fetch-depth: 0, so full history is present.
+          git fetch origin main
           if ! git merge-base --is-ancestor "${GITHUB_REF_NAME}^{commit}" origin/main; then
             echo "::error::${GITHUB_REF_NAME} is not an ancestor of main. Tags are cut from main only — see docs/BRANCHING.md"
             exit 1

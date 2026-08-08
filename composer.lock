@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d5a0ec1bcc7f1b3fb07710006e67e88c",
+    "content-hash": "b792fa7d2671eeea08d0a9da2d1d56cd",
     "packages": [
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -139,16 +139,16 @@
         },
         {
             "name": "libxa/framework",
-            "version": "v0.9.0",
+            "version": "v0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/libxa-framework/libxa.git",
-                "reference": "ce14e73911a6c59dde73b6e780be2e03594dbcfd"
+                "reference": "76152979a42c715d29c80124c9a0d0318c300f64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/libxa-framework/libxa/zipball/ce14e73911a6c59dde73b6e780be2e03594dbcfd",
-                "reference": "ce14e73911a6c59dde73b6e780be2e03594dbcfd",
+                "url": "https://api.github.com/repos/libxa-framework/libxa/zipball/76152979a42c715d29c80124c9a0d0318c300f64",
+                "reference": "76152979a42c715d29c80124c9a0d0318c300f64",
                 "shasum": ""
             },
             "require": {
@@ -164,8 +164,8 @@
                 "workerman/workerman": "^4.1"
             },
             "require-dev": {
-                "phpstan/phpstan": "^1.10",
-                "phpunit/phpunit": "^11.0",
+                "phpstan/phpstan": "^1.10 || ^2.0",
+                "phpunit/phpunit": "^11.5 || ^12.0 || ^13.0",
                 "squizlabs/php_codesniffer": "^3.9"
             },
             "type": "library",
@@ -211,7 +211,7 @@
                 "security": "https://github.com/libxa-framework/libxa/security/policy",
                 "source": "https://github.com/libxa-framework/libxa"
             },
-            "time": "2026-08-08T14:53:05+00:00"
+            "time": "2026-08-08T18:31:09+00:00"
         },
         {
             "name": "nesbot/carbon",
