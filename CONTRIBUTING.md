@@ -46,19 +46,38 @@ your-workspace/
 └── LibxaStack/     # this repository
 ```
 
-`composer install` then junctions `vendor/libxa/framework` onto
-`../libxaframe`, so the vendor directory *is* your framework working copy.
-Framework edits take effect on the next request — no `composer update`, no
-`dump-autoload`, not even for new classes.
+By default `composer install` gives you the **released** framework from
+Packagist, because the committed lock pins a real version — that is what keeps
+CI and `composer create-project` reproducible.
 
-Two things in `composer.json` make that safe, and must not be "simplified":
+To work against your local checkout instead, opt in explicitly:
+
+```bash
+composer update libxa/framework:dev-main
+```
+
+That junctions `vendor/libxa/framework` onto `../libxaframe`, so the vendor
+directory *is* your framework working copy: edits take effect on the next
+request, with no `composer update` and no `dump-autoload`, not even for
+brand-new classes.
+
+> **Do not commit the lock file change that produces.** A lock recording a
+> `path` dist only installs on your machine — every CI job and every
+> `create-project` then fails with
+> `Source path "../libxaframe" is not found`. `FrameworkLinkTest` fails the
+> build if such a lock is ever committed. Run `composer update libxa/framework`
+> with the checkout renamed away before committing, as
+> [docs/RELEASING.md](docs/RELEASING.md) describes.
+
+Three settings in `composer.json` make this work, and must not be
+"simplified" — `tests/Feature/FrameworkLinkTest.php` fails the build if any is
+undone:
 
 | Setting | Why |
 |---|---|
-| repository url is the glob `../libxaframe*` | A literal path that does not exist makes Composer **abort**, breaking `composer create-project` for everyone without the sibling checkout. A glob matching nothing is ignored, so resolution falls through to Packagist. |
-| constraint is `^0.8.0 \|\| dev-main@dev` | The `@dev` suffix scopes the dev-stability allowance to this one package. A global `minimum-stability: dev` would let *every* dependency resolve to an unreleased version. |
-
-`tests/Feature/FrameworkLinkTest.php` fails the build if either is undone.
+| url is the glob `../libxaframe*` | A literal path that does not exist makes Composer **abort**, breaking `composer create-project` for everyone without the sibling checkout. A glob matching nothing is simply ignored. |
+| `"canonical": false` | A canonical path repository *replaces* Packagist for any package it provides. With the checkout present, every released version became unresolvable — even `composer update --lock` failed. |
+| constraint is `^0.9.0 \|\| dev-main@dev` | The `@dev` suffix scopes the dev-stability allowance to this one package. A global `minimum-stability: dev` would let *every* dependency resolve to an unreleased version. |
 
 ---
 

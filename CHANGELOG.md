@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-08-08
+
+> **Requires `libxa/framework` ^0.9.0.** The skeleton's tests depend on fixes
+> that shipped in that release, so this is a minor bump rather than a patch —
+> below 1.0 Composer treats the minor number as the compatibility boundary.
+
 ### Added
 
 - A real test suite. `tests/TestCase.php` boots the application, migrates a
@@ -56,5 +62,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Baseline for this changelog. Earlier releases are catalogued in the repository
 history.
 
-[Unreleased]: https://github.com/libxa-framework/LibxaStack/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/libxa-framework/LibxaStack/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/libxa-framework/LibxaStack/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/libxa-framework/LibxaStack/releases/tag/v0.1.1

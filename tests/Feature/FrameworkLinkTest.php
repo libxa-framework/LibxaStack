@@ -44,8 +44,37 @@ class FrameworkLinkTest extends TestCase
         }
     }
 
+    /**
+     * Whether Composer actually resolved the framework through the path
+     * repository, as recorded in the lock file.
+     *
+     * The sibling checkout merely *existing* is not enough to demand a link:
+     * re-locking for a release deliberately resolves from Packagist while the
+     * checkout is still on disk, and that is a correct, expected state. The
+     * lock is the authority on which source was chosen.
+     */
+    private function lockedFromPath(): bool
+    {
+        $lock = json_decode(
+            (string) file_get_contents(dirname(__DIR__, 2) . '/composer.lock'),
+            true
+        );
+
+        foreach ($lock['packages'] ?? [] as $package) {
+            if (($package['name'] ?? '') === 'libxa/framework') {
+                return ($package['dist']['type'] ?? '') === 'path';
+            }
+        }
+
+        return false;
+    }
+
     public function test_vendor_is_a_link_to_the_framework_source_not_a_copy(): void
     {
+        if (! $this->lockedFromPath()) {
+            $this->markTestSkipped('Lock resolves the framework from Packagist, so vendor is a real directory.');
+        }
+
         $this->assertDirectoryExists($this->vendorPath);
 
         $realVendor = realpath($this->vendorPath);
@@ -67,6 +96,10 @@ class FrameworkLinkTest extends TestCase
      */
     public function test_the_framework_source_tree_is_identical_through_vendor(): void
     {
+        if (! $this->lockedFromPath()) {
+            $this->markTestSkipped('Lock resolves the framework from Packagist; a version difference is expected.');
+        }
+
         $listing = function (string $base): array {
             $files = [];
 
@@ -123,6 +156,15 @@ class FrameworkLinkTest extends TestCase
             (string) $repo['url'],
             'the url must be a glob: a literal missing path makes Composer abort'
         );
+
+        // A canonical path repository *replaces* Packagist for any package it
+        // provides. With the sibling checkout present, that made every
+        // released version unresolvable — including during `composer update
+        // --lock`, which then failed outright.
+        $this->assertFalse(
+            $repo['canonical'] ?? true,
+            'the path repository must be non-canonical so Packagist versions stay resolvable'
+        );
     }
 
     /**
@@ -143,6 +185,46 @@ class FrameworkLinkTest extends TestCase
             '/\^\d/',
             $constraint,
             'there must also be a released-version constraint for a normal install'
+        );
+
+        // Without the @dev suffix this constraint needs a global
+        // minimum-stability of "dev", which would let *every* dependency
+        // resolve to an unreleased version, not just the framework.
+        $this->assertStringContainsString(
+            'dev-main@dev',
+            $constraint,
+            'the @dev suffix scopes dev stability to this package alone'
+        );
+    }
+
+    /**
+     * The committed lock must be installable by CI and by real users. A lock
+     * that records the framework from a `path` dist points at ../libxaframe,
+     * which exists on exactly one machine — every CI job and every
+     * create-project then fails with:
+     *   Source path "../libxaframe" is not found for package libxa/framework
+     */
+    public function test_the_committed_lock_does_not_reference_a_local_path(): void
+    {
+        $lock = json_decode(
+            (string) file_get_contents(dirname(__DIR__, 2) . '/composer.lock'),
+            true
+        );
+
+        $offenders = [];
+
+        foreach (array_merge($lock['packages'] ?? [], $lock['packages-dev'] ?? []) as $package) {
+            if (($package['dist']['type'] ?? '') === 'path') {
+                $offenders[] = $package['name'] . ' -> ' . ($package['dist']['url'] ?? '?');
+            }
+        }
+
+        $this->assertSame(
+            [],
+            $offenders,
+            "The lock references local paths, so it only installs on the machine that generated it:\n  "
+            . implode("\n  ", $offenders)
+            . "\n\nRegenerate it with the sibling checkout hidden - see docs/RELEASING.md."
         );
     }
 }
