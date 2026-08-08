@@ -64,7 +64,11 @@ jobs:
       - name: Tag must be on main
         run: |
           set -euo pipefail
-          git fetch origin main --depth=0
+          # No --depth: `--depth=0` is not "unlimited", it is invalid
+          # (`fatal: depth 0 is not a positive number`) and under `set -e`
+          # aborts the step with exit 128. The checkout above already used
+          # fetch-depth: 0, so full history is present.
+          git fetch origin main
           if ! git merge-base --is-ancestor "${GITHUB_REF_NAME}^{commit}" origin/main; then
             echo "::error::${GITHUB_REF_NAME} is not an ancestor of main. Tags are cut from main only — see docs/BRANCHING.md"
             exit 1
@@ -125,6 +129,22 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
+
+      # Same preparation ci.yml performs. Without it the suite aborts with
+      # "No application key set", because a freshly checked-out skeleton has
+      # no .env, no APP_KEY and no database — which is exactly how the v0.3.0
+      # release failed.
+      - name: Prepare the application
+        run: |
+          set -euo pipefail
+          cp .env.example .env
+          mkdir -p database \
+                   src/storage/framework/views \
+                   src/storage/framework/cache/data \
+                   src/storage/framework/sessions \
+                   src/storage/logs
+          touch database/database.sqlite
+          php libxa key:generate --no-ansi
 
       # The tagged commit is exactly what consumers download. Re-run the suite
       # here rather than trusting the CI run from the PR that preceded it.
