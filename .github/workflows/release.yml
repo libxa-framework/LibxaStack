@@ -130,6 +130,22 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
 
+      # Same preparation ci.yml performs. Without it the suite aborts with
+      # "No application key set", because a freshly checked-out skeleton has
+      # no .env, no APP_KEY and no database — which is exactly how the v0.3.0
+      # release failed.
+      - name: Prepare the application
+        run: |
+          set -euo pipefail
+          cp .env.example .env
+          mkdir -p database \
+                   src/storage/framework/views \
+                   src/storage/framework/cache/data \
+                   src/storage/framework/sessions \
+                   src/storage/logs
+          touch database/database.sqlite
+          php libxa key:generate --no-ansi
+
       # The tagged commit is exactly what consumers download. Re-run the suite
       # here rather than trusting the CI run from the PR that preceded it.
       - name: Run test suite
