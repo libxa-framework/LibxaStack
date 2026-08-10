@@ -9,10 +9,10 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "@inertiajs/react": "^1.0.0",
-        "@inertiajs/vue3": "^1.0.0",
-        "react": "^18.3.0",
-        "react-dom": "^18.3.0",
+        "@inertiajs/react": "^3.6.1",
+        "@inertiajs/vue3": "^3.6.1",
+        "react": "^19.2.8",
+        "react-dom": "^19.2.8",
         "vue": "^3.4.0"
     },
     "devDependencies": {
