@@ -1,0 +1,51 @@
+# LibxaFrame front controller (Apache)
+#
+# Without this file, Apache looks for a real file or directory at every URL.
+# "/" works because DirectoryIndex finds index.php, and every other route
+# returns a 404 from Apache before PHP is ever reached. That is the single most
+# common "it works locally but 404s on the server" report, and the reason is
+# that `php -S ... router.php` emulates these rules for the built-in server
+# while a real server needs them spelled out.
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        # MultiViews makes Apache guess "/about" means "about.php", which
+        # bypasses the front controller and serves the wrong thing.
+        Options -MultiViews
+    </IfModule>
+
+    # Never list the contents of a directory that has no index file.
+    Options -Indexes
+
+    RewriteEngine On
+
+    # CGI and FastCGI drop the Authorization header, which is what API token
+    # authentication reads. Put it back where PHP can see it.
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # One canonical URL per page: redirect "/about/" to "/about" unless a real
+    # directory of that name exists.
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Anything that is not a real file or directory goes to the front
+    # controller, which is what makes routing work.
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    # Fail loudly rather than serving a site where every link 404s.
+    <IfModule mod_headers.c>
+        Header set X-Libxa-Warning "mod_rewrite is not enabled; routing will not work"
+    </IfModule>
+</IfModule>
+
+# Dotfiles are never web content. This directory should not contain any, but
+# an editor backup or a stray .env copied here would otherwise be downloadable.
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>

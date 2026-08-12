@@ -10,7 +10,7 @@ use Libxa\Http\Response;
  * Home Controller
  *
  * The authenticated landing page, shown after login (behind the "auth"
- * middleware — see routes/web.php).
+ * middleware: see routes/web.php).
  */
 class HomeController
 {

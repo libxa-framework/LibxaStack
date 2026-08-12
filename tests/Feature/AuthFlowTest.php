@@ -34,7 +34,7 @@ class AuthFlowTest extends TestCase
 
     /**
      * layouts/app.blade.php uses @hasSection, a directive the compiler did
-     * not implement — so the compiled cache file was invalid PHP and every
+     * not implement, so the compiled cache file was invalid PHP and every
      * page using the default layout was a fatal parse error.
      */
     public function test_the_login_page_renders_through_the_default_layout(): void

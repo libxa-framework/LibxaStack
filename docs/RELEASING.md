@@ -1,4 +1,4 @@
-# Release Runbook — LibxaStack
+# Release Runbook: LibxaStack
 
 The process is identical to the framework's, so the canonical runbook is
 **[libxa/docs/RELEASING.md](https://github.com/libxa-framework/libxa/blob/main/docs/RELEASING.md)**.
@@ -16,7 +16,7 @@ whole archive into a new directory. So:
 - `composer.lock` **is committed** and must be current. A library omits it; an
   application must pin exactly what it was tested against.
 - The `.gitattributes` export-ignore list is deliberately short. Almost
-  everything in the repository *is* the deliverable — anything stripped is
+  everything in the repository *is* the deliverable: anything stripped is
   something the new project will not have.
 - The `create-project` CI job installs this checkout from scratch and runs the
   generated project's own test suite. That job is the real release gate: it is
@@ -25,7 +25,7 @@ whole archive into a new directory. So:
 ### Its version follows its own timeline
 
 The skeleton and the framework version independently. A framework release does
-not require a skeleton release unless the skeleton needs to change — but a
+not require a skeleton release unless the skeleton needs to change, but a
 skeleton release should generally follow a framework **minor** release, so new
 projects get the new version.
 
@@ -36,7 +36,7 @@ projects get the new version.
 Order matters, and getting it wrong pins the wrong version in the lock file.
 
 1. **Wait** until the framework version is live on Packagist. Do not start
-   before that — Composer will resolve the older release.
+   before that: Composer will resolve the older release.
 
 2. Widen the constraint in `composer.json`:
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'LibxaFrame — The Modern PHP Framework for Next-Gen Web')
+@section('title', 'LibxaFrame: The Modern PHP Framework for Next-Gen Web')
 
 @section('main-class', 'full-width')
 
@@ -315,7 +315,7 @@
 <section class="hero">
     <div class="hero-badge">
         <span class="pulse-dot"></span>
-        LibxaFrame 2.0 is here — read the announcement
+        LibxaFrame 2.0 is here: read the announcement
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </div>
 
@@ -326,7 +326,7 @@
 
     <p class="lead">
         A modern PHP framework engineered for speed, AI-native features, and developer joy.
-        From prototype to production — in minutes.
+        From prototype to production: in minutes.
     </p>
 
     <div class="hero-actions">
@@ -410,7 +410,7 @@
     <p class="eyebrow">Why LibxaFrame</p>
     <h2>Everything you need.<br>Nothing you don't.</h2>
     <p style="color:var(--text-faint); max-width:32rem; margin: 1.25rem auto 0;">
-        Carefully crafted features that solve real problems — without the bloat.
+        Carefully crafted features that solve real problems, without the bloat.
     </p>
 
     <div class="features-grid" style="text-align:left;">
@@ -420,7 +420,7 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             </div>
             <h3>Lightning Fast</h3>
-            <p>Optimized routing and native Fiber support for asynchronous, non-blocking I/O — benchmarked at sub-millisecond response times under load.</p>
+            <p>Optimized routing and native Fiber support for asynchronous, non-blocking I/O: benchmarked at sub-millisecond response times under load.</p>
         </div>
         <div class="feature-card">
             <span class="feature-badge">Security</span>
@@ -449,7 +449,7 @@
                 <p class="eyebrow">Built-in auth</p>
                 <h2 style="margin-bottom:1.5rem;">Multi-driver authentication,<br>ready on day one.</h2>
                 <p style="color:var(--text-faint); line-height:1.7; margin-bottom:2rem;">
-                    Session-based web auth, API token guards, and persistent sessions via the Atlas connection pool — all configured out of the box. No packages to install, no boilerplate to write.
+                    Session-based web auth, API token guards, and persistent sessions via the Atlas connection pool: all configured out of the box. No packages to install, no boilerplate to write.
                 </p>
                 @guest
                     <a href="/register" class="btn-primary btn-lg">

@@ -2,7 +2,7 @@
  | Application stylesheet
  |
  | Referenced by layouts/app.blade.php through @vite(). Tailwind v4 needs no
- | separate config file — the single @import below pulls in the framework and
+ | separate config file: the single @import below pulls in the framework and
  | scans the content globs declared with @source.
  */
 

@@ -10,7 +10,7 @@ use Libxa\Http\Request;
  * API Controller
  *
  * Small example endpoints for the API guard. Return values are plain
- * arrays — the router JSON-encodes array/toArray()-able results
+ * arrays: the router JSON-encodes array/toArray()-able results
  * automatically (see Router::toResponse()).
  */
 class ApiController

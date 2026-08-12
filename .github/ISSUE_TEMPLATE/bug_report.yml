@@ -10,7 +10,7 @@ body:
         **Is this a framework bug?** Routing, the ORM, Blade, the container,
         sessions and encryption all live in
         [libxa-framework/libxa](https://github.com/libxa-framework/libxa/issues).
-        This repository is only the application skeleton — config files,
+        This repository is only the application skeleton: config files,
         example controllers, migrations, views and tooling.
 
         **Security issue?** Do not file it here. Follow

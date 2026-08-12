@@ -23,7 +23,7 @@ use PHPUnit\Framework\TestCase;
  *
  * These checks only apply when the sibling checkout is present. A real install
  * (CI, production, `composer create-project`) resolves libxa/framework from
- * Packagist into a normal directory, which is correct — so they skip instead
+ * Packagist into a normal directory, which is correct, so they skip instead
  * of failing there.
  */
 class FrameworkLinkTest extends TestCase
@@ -40,7 +40,7 @@ class FrameworkLinkTest extends TestCase
         $this->sourcePath = dirname($root) . '/libxaframe';
 
         if (! is_dir($this->sourcePath)) {
-            $this->markTestSkipped('No sibling framework checkout — installed from Packagist.');
+            $this->markTestSkipped('No sibling framework checkout: installed from Packagist.');
         }
     }
 
@@ -159,7 +159,7 @@ class FrameworkLinkTest extends TestCase
 
         // A canonical path repository *replaces* Packagist for any package it
         // provides. With the sibling checkout present, that made every
-        // released version unresolvable — including during `composer update
+        // released version unresolvable, including during `composer update
         // --lock`, which then failed outright.
         $this->assertFalse(
             $repo['canonical'] ?? true,
@@ -200,7 +200,7 @@ class FrameworkLinkTest extends TestCase
     /**
      * The committed lock must be installable by CI and by real users. A lock
      * that records the framework from a `path` dist points at ../libxaframe,
-     * which exists on exactly one machine — every CI job and every
+     * which exists on exactly one machine: every CI job and every
      * create-project then fails with:
      *   Source path "../libxaframe" is not found for package libxa/framework
      */

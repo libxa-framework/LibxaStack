@@ -11,13 +11,13 @@ contact_links:
     url: https://github.com/libxa-framework/libxa/issues
     about: >
       This repository is only the application skeleton. If the bug is in the
-      framework itself, report it there — it will get fixed faster.
+      framework itself, report it there: it will get fixed faster.
 
   - name: 💬 Question or help with your own code
     url: https://github.com/libxa-framework/libxa/discussions
     about: >
       "How do I ...?" belongs in Discussions. Once you have run
-      composer create-project, the code is yours — we cannot debug it, but
+      composer create-project, the code is yours: we cannot debug it, but
       the community may be able to help.
 
   - name: 📖 Contributing guide

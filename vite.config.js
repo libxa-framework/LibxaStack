@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'path'
 
 /**
- * LibxaFrame — Vite Configuration
+ * LibxaFrame: Vite Configuration
  *
  * Supports React, Vue 3, Svelte and plain JS/TS.
  * Toggle plugins based on what your app uses.
@@ -19,7 +19,7 @@ export default defineConfig({
         svelte(),   // Remove if not using Svelte
     ],
 
-    // Dev server — proxies asset requests to PHP server
+    // Dev server: proxies asset requests to PHP server
     server: {
         host: '0.0.0.0',
         port: 5173,
@@ -53,7 +53,7 @@ export default defineConfig({
         },
         // Vite 5+ defaults to writing the manifest to `<outDir>/.vite/manifest.json`,
         // but the framework's vite() helper reads `<outDir>/manifest.json`.
-        // Naming it explicitly puts the file where PHP actually looks —
+        // Naming it explicitly puts the file where PHP actually looks:
         // otherwise every @vite() call silently emits nothing.
         manifest: 'manifest.json',
         sourcemap: false,
