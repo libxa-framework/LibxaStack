@@ -46,5 +46,10 @@
 #   /.gitignore     the new project needs the correct ignore rules from day one
 #   /.editorconfig
 #   /LICENSE /README.md /CHANGELOG.md /SECURITY.md
+#   /DEPLOYMENT.md  lives at the root rather than in /docs precisely because
+#                   /docs is stripped. It is about the generated application,
+#                   not about maintaining this skeleton, and a new project
+#                   that cannot find out how to deploy is the whole reason
+#                   0.4.0 exists. Do not move it into /docs.
 #   /composer.json /package.json /vite.config.js
 #   /libxa          the CLI entry point

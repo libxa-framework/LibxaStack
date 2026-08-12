@@ -42,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   the other paths that must never be served. It is inert when the document
   root already points at `src/public/`, since Apache only reads `.htaccess`
   files at or below the document root.
-- **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** with working configuration for
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** with working configuration for
   Apache, nginx, Caddy and shared hosting, the two settings that stop
   `.htaccess` being read at all (`AllowOverride None`, mod_rewrite disabled),
   a production checklist, and `curl` commands to verify a deployment rather
