@@ -1,0 +1,42 @@
+# Shared hosting fallback (Apache)
+#
+# The correct deployment points the document root at `src/public/`, and on a
+# VPS or any host that lets you set it, do that and ignore this file.
+#
+# Shared hosting usually does not: `public_html` is the project root, which
+# means `.env`, `vendor/` and `src/app/` sit inside the web root. This file
+# makes that arrangement safe and working by sending every request into
+# `src/public/` and refusing the paths that must never be served.
+#
+# It is inert when the document root is already `src/public/`, because Apache
+# only reads the .htaccess files at or below the document root.
+
+<IfModule mod_rewrite.c>
+    Options -MultiViews -Indexes
+
+    RewriteEngine On
+
+    # Already inside the public directory: leave it alone, or the rule below
+    # would rewrite src/public/src/public/... forever.
+    #
+    # The leading slash on the substitution matters. A relative target is
+    # resolved against this directory and %{REQUEST_URI} keeps the original
+    # request, so the condition above would never match and the rule would
+    # loop. An absolute URL-path forces an internal redirect, which updates
+    # %{REQUEST_URI} and lets the guard do its job on the second pass.
+    RewriteCond %{REQUEST_URI} !^/src/public/
+    RewriteRule ^(.*)$ /src/public/$1 [L]
+</IfModule>
+
+# Defence in depth. If mod_rewrite is unavailable the rewrite above does
+# nothing, and these paths would otherwise be downloadable in full.
+<FilesMatch "^(\.env|\.env\..*|composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml.*|.*\.md)$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# Apache 2.4 syntax above; these directories are refused outright.
+RedirectMatch 404 ^/(vendor|src/(app|bootstrap|config|database|lang|resources|routes|storage))/

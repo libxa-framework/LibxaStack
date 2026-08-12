@@ -81,6 +81,18 @@ php libxa serve
 
 Open your browser and visit `http://localhost:8000`
 
+## Deploying
+
+Point the web server's document root at **`src/public/`** and send anything
+that is not a real file to `index.php`. The kit ships the Apache `.htaccess`
+files that do this, and [DEPLOYMENT.md](DEPLOYMENT.md) has working
+configuration for Apache, nginx, Caddy and shared hosting.
+
+> **The home page works but every other route 404s?** That is this exact
+> setting. Locally, `php libxa serve` uses `src/public/router.php` to emulate
+> mod_rewrite; a real server needs the rule written out. See
+> [DEPLOYMENT.md](DEPLOYMENT.md#the-one-that-catches-everyone).
+
 ## Running the tests
 
 ```bash
@@ -88,7 +100,7 @@ php vendor/bin/phpunit
 ```
 
 The suite boots the real application, migrates a throwaway SQLite database per
-test and drives requests through the actual HTTP kernel — so a green run means
+test and drives requests through the actual HTTP kernel, so a green run means
 register → login → protected page → logout genuinely works.
 
 ## Developing against a local framework checkout
@@ -106,7 +118,7 @@ then `composer install` **junctions** `vendor/libxa/framework` straight onto
 `../libxaframe` (`repositories[0].options.symlink: true`). The vendor directory
 *is* the framework working copy, so:
 
-- editing framework source takes effect on the very next request — no
+- editing framework source takes effect on the very next request: no
   `composer update`, no `dump-autoload`, not even for brand-new classes
   (the framework is PSR-4, so the autoloader finds them on the fly);
 - the two can never drift apart. They previously did, in both directions:
@@ -118,7 +130,7 @@ then `composer install` **junctions** `vendor/libxa/framework` straight onto
 replaced by a copy. It skips itself when there is no sibling checkout, which
 is the correct state for CI and production.
 
-Two details in `composer.json` are deliberate — please keep them:
+Two details in `composer.json` are deliberate: please keep them:
 
 | Setting | Why |
 |---|---|
@@ -600,7 +612,7 @@ The LibxaFrame framework is open-sourced software licensed under the MIT license
 # How this project works
 
 This section is for people **maintaining the starter kit**. If you have already
-run `composer create-project`, the code is yours and none of this applies — the
+run `composer create-project`, the code is yours and none of this applies: the
 sections above are your documentation.
 
 Everything here is the operating model: how this repository relates to the
@@ -653,11 +665,11 @@ reviewed `release/*` or `hotfix/*` pull request.**
 
 | Branch | From | Into | Protected |
 |---|---|---|---|
-| `main` | — | — | ✅ |
-| `develop` | `main` | — | ✅ |
-| `feature/*` `fix/*` `docs/*` `test/*` `refactor/*` `chore/*` | `develop` | `develop` | — |
-| `release/vX.Y.Z` | `develop` | `main` **and** `develop` | — |
-| `hotfix/vX.Y.Z` | `main` | `main` **and** `develop` | — |
+| `main` |: |: | ✅ |
+| `develop` | `main` |: | ✅ |
+| `feature/*` `fix/*` `docs/*` `test/*` `refactor/*` `chore/*` | `develop` | `develop` |: |
+| `release/vX.Y.Z` | `develop` | `main` **and** `develop` |: |
+| `hotfix/vX.Y.Z` | `main` | `main` **and** `develop` |: |
 
 `develop` is the GitHub default branch, so new pull requests target it
 automatically.
@@ -698,7 +710,7 @@ your-workspace/
 
 `composer install` then **junctions** `vendor/libxa/framework` onto
 `../libxaframe`. The vendor directory *is* the framework working copy, so
-framework edits take effect on the next request — no `composer update`, no
+framework edits take effect on the next request: no `composer update`, no
 `dump-autoload`, not even for brand-new classes.
 
 Two settings in `composer.json` make that safe. Neither is redundant, and
@@ -709,7 +721,7 @@ Two settings in `composer.json` make that safe. Neither is redundant, and
 | repository url is the glob `../libxaframe*` | A literal path that does not exist makes Composer **abort**, breaking `composer create-project` for everyone without the sibling checkout. A glob matching nothing is ignored, so resolution falls through to Packagist. |
 | constraint is `^0.8.0 \|\| dev-main@dev` | The `@dev` suffix scopes the dev-stability allowance to this one package. A global `minimum-stability: dev` would let *every* dependency resolve to an unreleased version. |
 
-Without a sibling checkout — CI, a normal install — the glob matches nothing
+Without a sibling checkout (CI, or a normal install) the glob matches nothing
 and `libxa/framework` comes from Packagist, exactly as a real user gets it.
 
 ## What CI enforces
@@ -739,7 +751,7 @@ The hygiene job exists because each of its checks caught something real:
 Tags are created **by a human**; CI verifies rather than creates them. Full
 runbook: [docs/RELEASING.md](docs/RELEASING.md).
 
-### After a framework release — order matters
+### After a framework release: order matters
 
 1. **Wait** until the framework version is live on Packagist. Starting earlier
    resolves the older release.
@@ -797,8 +809,8 @@ cd /tmp/smoke && php libxa migrate && php vendor/bin/phpunit
 ### Version numbers
 
 [SemVer](https://semver.org), prefixed `v`. Below 1.0, Composer treats the
-**minor** number as the compatibility boundary — `^0.1.0` allows `0.1.9` but
-not `0.2.0` — so anything that breaks a documented default needs a minor bump.
+**minor** number as the compatibility boundary: `^0.1.0` allows `0.1.9` but
+not `0.2.0`, so anything that breaks a documented default needs a minor bump.
 
 The skeleton and the framework version independently. A framework release does
 not require one here unless the skeleton itself changes.

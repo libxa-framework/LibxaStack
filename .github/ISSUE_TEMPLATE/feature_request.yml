@@ -10,7 +10,7 @@ body:
         [libxa-framework/libxa](https://github.com/libxa-framework/libxa/issues).
 
         Bear in mind that everything here is installed by every new project,
-        forever — so the bar for adding dependencies or example code is high.
+        forever, so the bar for adding dependencies or example code is high.
         "One less thing to delete" is a legitimate argument against a feature.
 
   - type: checkboxes
@@ -54,8 +54,8 @@ body:
     attributes:
       label: Would this break existing code?
       options:
-        - "No — purely additive"
-        - "Yes — existing behaviour changes"
+        - "No: purely additive"
+        - "Yes: existing behaviour changes"
         - "Not sure"
     validations:
       required: true

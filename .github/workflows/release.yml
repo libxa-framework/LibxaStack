@@ -1,7 +1,7 @@
 name: Release
 
 # Tags are created by a human (see docs/RELEASING.md). This workflow's job is
-# to *verify* the tag and publish the GitHub Release — never to create a tag.
+# to *verify* the tag and publish the GitHub Release: never to create a tag.
 # Packagist publishes independently via its push webhook.
 on:
   push:
@@ -40,7 +40,7 @@ jobs:
             exit 1
           fi
 
-      # A lightweight tag has no author, date or message — no provenance for
+      # A lightweight tag has no author, date or message: no provenance for
       # something that is about to be published permanently.
       #
       # Asked via the API rather than `git cat-file`: actions/checkout writes
@@ -70,7 +70,7 @@ jobs:
           # fetch-depth: 0, so full history is present.
           git fetch origin main
           if ! git merge-base --is-ancestor "${GITHUB_REF_NAME}^{commit}" origin/main; then
-            echo "::error::${GITHUB_REF_NAME} is not an ancestor of main. Tags are cut from main only — see docs/BRANCHING.md"
+            echo "::error::${GITHUB_REF_NAME} is not an ancestor of main. Tags are cut from main only: see docs/BRANCHING.md"
             exit 1
           fi
 
@@ -129,6 +129,22 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
+
+      # Same preparation ci.yml performs. Without it the suite aborts with
+      # "No application key set", because a freshly checked-out skeleton has
+      # no .env, no APP_KEY and no database, which is exactly how the v0.3.0
+      # release failed.
+      - name: Prepare the application
+        run: |
+          set -euo pipefail
+          cp .env.example .env
+          mkdir -p database \
+                   src/storage/framework/views \
+                   src/storage/framework/cache/data \
+                   src/storage/framework/sessions \
+                   src/storage/logs
+          touch database/database.sqlite
+          php libxa key:generate --no-ansi
 
       # The tagged commit is exactly what consumers download. Re-run the suite
       # here rather than trusting the CI run from the PR that preceded it.

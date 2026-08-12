@@ -80,7 +80,7 @@ class ApplicationBootTest extends TestCase
 
     /**
      * A migration whose class name does not match its filename used to be
-     * skipped in silence — the starter kit shipped exactly one such file, so
+     * skipped in silence: the starter kit shipped exactly one such file, so
      * personal_access_tokens never got its refresh_token column.
      */
     public function test_every_migration_actually_ran(): void
