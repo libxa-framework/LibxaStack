@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login — LibxaFrame')
+@section('title', 'Login | LibxaFrame')
 
 @section('no-footer', true)
 

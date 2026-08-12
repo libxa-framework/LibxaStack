@@ -31,7 +31,7 @@
             --primary-hover: #fcd34d;  /* amber-300 */
             --primary-active: #d97706; /* amber-600 */
 
-            /* Light theme (default) — matches Tailwind neutral scale */
+            /* Light theme (default): matches Tailwind neutral scale */
             --bg: #ffffff;             /* white */
             --bg-subtle: #fafafa;      /* neutral-50 */
             --surface: #ffffff;        /* white */

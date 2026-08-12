@@ -6,7 +6,7 @@
  | cache-busted <script>/<link> tags.
  |
  | The Vite config already registers the React, Vue and Svelte plugins, so you
- | can import components from any of them here — or delete the plugins you do
+ | can import components from any of them here, or delete the plugins you do
  | not need from vite.config.js.
  */
 

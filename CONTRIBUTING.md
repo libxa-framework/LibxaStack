@@ -1,6 +1,6 @@
 # Contributing to LibxaStack
 
-LibxaStack is the **starter kit** — the skeleton `composer create-project`
+LibxaStack is the **starter kit**: the skeleton `composer create-project`
 produces. Contributions here shape the first hour of every new LibxaFrame
 project, so the bar is a little different from a normal application.
 
@@ -47,7 +47,7 @@ your-workspace/
 ```
 
 By default `composer install` gives you the **released** framework from
-Packagist, because the committed lock pins a real version — that is what keeps
+Packagist, because the committed lock pins a real version: that is what keeps
 CI and `composer create-project` reproducible.
 
 To work against your local checkout instead, opt in explicitly:
@@ -62,7 +62,7 @@ request, with no `composer update` and no `dump-autoload`, not even for
 brand-new classes.
 
 > **Do not commit the lock file change that produces.** A lock recording a
-> `path` dist only installs on your machine — every CI job and every
+> `path` dist only installs on your machine: every CI job and every
 > `create-project` then fails with
 > `Source path "../libxaframe" is not found`. `FrameworkLinkTest` fails the
 > build if such a lock is ever committed. Run `composer update libxa/framework`
@@ -70,13 +70,13 @@ brand-new classes.
 > [docs/RELEASING.md](docs/RELEASING.md) describes.
 
 Three settings in `composer.json` make this work, and must not be
-"simplified" — `tests/Feature/FrameworkLinkTest.php` fails the build if any is
+"simplified": `tests/Feature/FrameworkLinkTest.php` fails the build if any is
 undone:
 
 | Setting | Why |
 |---|---|
 | url is the glob `../libxaframe*` | A literal path that does not exist makes Composer **abort**, breaking `composer create-project` for everyone without the sibling checkout. A glob matching nothing is simply ignored. |
-| `"canonical": false` | A canonical path repository *replaces* Packagist for any package it provides. With the checkout present, every released version became unresolvable — even `composer update --lock` failed. |
+| `"canonical": false` | A canonical path repository *replaces* Packagist for any package it provides. With the checkout present, every released version became unresolvable, even `composer update --lock` failed. |
 | constraint is `^0.9.0 \|\| dev-main@dev` | The `@dev` suffix scopes the dev-stability allowance to this one package. A global `minimum-stability: dev` would let *every* dependency resolve to an unreleased version. |
 
 ---
@@ -176,15 +176,15 @@ Both now fail the build.
 1. Rebase onto current `develop`.
 2. Open the PR **against `develop`**.
 3. Fill in the template, especially how you verified the change.
-4. If you touched anything a new user sees on day one — config comments,
-   README, example controllers — say what it looks like now.
+4. If you touched anything a new user sees on day one: config comments,
+   README, example controllers: say what it looks like now.
 
 ### After a framework release
 
 When the framework ships a new minor version, the skeleton needs its constraint
 widened. That is a release-manager task; see
 [the framework's RELEASING.md](https://github.com/libxa-framework/libxa/blob/main/docs/RELEASING.md#releasing-the-two-repositories-together)
-for the required order — widening before the framework tag is live pins the
+for the required order: widening before the framework tag is live pins the
 wrong version in the lock file.
 
 ---
