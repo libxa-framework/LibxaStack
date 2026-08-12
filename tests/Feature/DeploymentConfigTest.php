@@ -126,9 +126,9 @@ class DeploymentConfigTest extends TestCase
 
     public function test_deployment_is_documented(): void
     {
-        $this->assertFileExists($this->root() . '/docs/DEPLOYMENT.md');
+        $this->assertFileExists($this->root() . '/DEPLOYMENT.md');
 
-        $docs = (string) file_get_contents($this->root() . '/docs/DEPLOYMENT.md');
+        $docs = (string) file_get_contents($this->root() . '/DEPLOYMENT.md');
 
         // The nginx equivalent of the Apache rules, and the mistake that
         // reproduces the same 404 on a server that has no .htaccess at all.

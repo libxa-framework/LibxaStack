@@ -85,13 +85,13 @@ Open your browser and visit `http://localhost:8000`
 
 Point the web server's document root at **`src/public/`** and send anything
 that is not a real file to `index.php`. The kit ships the Apache `.htaccess`
-files that do this, and [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) has working
+files that do this, and [DEPLOYMENT.md](DEPLOYMENT.md) has working
 configuration for Apache, nginx, Caddy and shared hosting.
 
 > **The home page works but every other route 404s?** That is this exact
 > setting. Locally, `php libxa serve` uses `src/public/router.php` to emulate
 > mod_rewrite; a real server needs the rule written out. See
-> [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md#the-one-that-catches-everyone).
+> [DEPLOYMENT.md](DEPLOYMENT.md#the-one-that-catches-everyone).
 
 ## Running the tests
 
