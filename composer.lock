@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b792fa7d2671eeea08d0a9da2d1d56cd",
+    "content-hash": "95532670dda22aceab3ccf9f4e897999",
     "packages": [
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -139,16 +139,16 @@
         },
         {
             "name": "libxa/framework",
-            "version": "v0.10.0",
+            "version": "v0.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/libxa-framework/libxa.git",
-                "reference": "76152979a42c715d29c80124c9a0d0318c300f64"
+                "reference": "9f09c47369ddf2a844ed11deeba53ec1abc7ad9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/libxa-framework/libxa/zipball/76152979a42c715d29c80124c9a0d0318c300f64",
-                "reference": "76152979a42c715d29c80124c9a0d0318c300f64",
+                "url": "https://api.github.com/repos/libxa-framework/libxa/zipball/9f09c47369ddf2a844ed11deeba53ec1abc7ad9a",
+                "reference": "9f09c47369ddf2a844ed11deeba53ec1abc7ad9a",
                 "shasum": ""
             },
             "require": {
@@ -211,7 +211,7 @@
                 "security": "https://github.com/libxa-framework/libxa/security/policy",
                 "source": "https://github.com/libxa-framework/libxa"
             },
-            "time": "2026-08-08T18:31:09+00:00"
+            "time": "2026-08-19T18:20:44+00:00"
         },
         {
             "name": "nesbot/carbon",

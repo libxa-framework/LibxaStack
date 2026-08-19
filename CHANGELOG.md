@@ -10,6 +10,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-08-19
+
+Postgres, and one name for the setting that picks a database.
+
+Requires **framework 0.12.0**, which is the release that made
+`config/database.php` actually get read. On anything earlier the file is
+ignored, so the connections below would be configured and never used.
+
+### Added
+
+- **A `pgsql` connection.** The framework has had Postgres support for a
+  while, but there was no `pgsql` block in `config/database.php` — so there
+  was no way to select it through config at all. Comes with `schema` and
+  `sslmode`, and port **5432** rather than inheriting MySQL's 3306.
+
+- **`DB_SQLITE_PATH`** says where the SQLite file goes, explicitly.
+
+### Changed
+
+- **`DB_CONNECTION` is the name for choosing a connection.** `.env.example`
+  shipped `DB_DRIVER` while `config/database.php` read `DB_CONNECTION`, so
+  which one took effect depended on which code path resolved the connection
+  first. `DB_DRIVER` is still read, so an existing project keeps its database
+  rather than quietly moving to SQLite on upgrade.
+
+- **`DB_DATABASE` is used for SQLite only when it looks like a path.** It is a
+  database *name* for MySQL and Postgres and a file *path* for SQLite. A
+  project that set `DB_DATABASE=myapp` for MySQL and later switched to SQLite
+  got an extension-less file literally called `myapp`, created without
+  complaint, and no clue where its data had gone. Existing values such as
+  `database/database.sqlite` keep working.
+
+- **`libxa/framework` now requires `^0.12.0`.** Below that, none of the above
+  has any effect.
+
+
 ## [0.4.0] - 2026-08-12
 
 > **Requires `libxa/framework` ^0.10.0.**
@@ -160,7 +196,8 @@ The frontend toolchain could not install or build at all:
 Baseline for this changelog. Earlier releases are catalogued in the repository
 history.
 
-[Unreleased]: https://github.com/libxa-framework/LibxaStack/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/libxa-framework/LibxaStack/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/libxa-framework/LibxaStack/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/libxa-framework/LibxaStack/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/libxa-framework/LibxaStack/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/libxa-framework/LibxaStack/compare/v0.1.1...v0.2.0
