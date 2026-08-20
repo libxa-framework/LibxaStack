@@ -10,6 +10,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-08-20
+
+Migrations now run on all three databases the starter kit offers.
+
+### Changed
+
+- **Requires framework [0.13.0](https://github.com/libxa-framework/libxa/releases/tag/v0.13.0).**
+
+  0.5.0 added a `pgsql` connection and settled on `DB_CONNECTION`, so you
+  could *select* Postgres or MySQL. This is the release where the migrations
+  then succeed against them.
+
+  The schema builder emitted SQLite's SQL whatever it was connected to, so
+  `php libxa migrate` worked on SQLite and failed on the first table
+  everywhere else — with a syntax error reported against line 2, pointing at
+  a column that was perfectly fine. 0.13.0 gives each driver its own grammar.
+
+  Verified with this skeleton's own four migrations, against the published
+  framework rather than a local checkout:
+
+  | | |
+  |---|---|
+  | SQLite | 4 migrations |
+  | MariaDB 11.4 | 4 migrations |
+  | PostgreSQL 18.4 | 4 migrations |
+
+
 ## [0.5.0] - 2026-08-19
 
 Postgres, and one name for the setting that picks a database.
@@ -196,7 +223,8 @@ The frontend toolchain could not install or build at all:
 Baseline for this changelog. Earlier releases are catalogued in the repository
 history.
 
-[Unreleased]: https://github.com/libxa-framework/LibxaStack/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/libxa-framework/LibxaStack/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/libxa-framework/LibxaStack/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/libxa-framework/LibxaStack/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/libxa-framework/LibxaStack/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/libxa-framework/LibxaStack/compare/v0.2.0...v0.3.0
